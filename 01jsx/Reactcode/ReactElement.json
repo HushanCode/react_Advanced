@@ -1,0 +1,123 @@
+{
+  "type": "div",
+  "key": null,
+  "ref": null,
+  "props": {
+    "style": {
+      "marginTop": "100px",
+      "marginLeft": "500px"
+    },
+    "children": [
+      {
+        "type": "div",
+        "key": null,
+        "ref": null,
+        "props": {
+          "children": "hello,world"
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "key": null,
+        "ref": null,
+        "props": {
+          "children": {
+            "type": "div",
+            "key": null,
+            "ref": null,
+            "props": {
+              "children": " 👽👽 "
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      "my name is alien",
+      [
+        {
+          "type": "div",
+          "key": "react",
+          "ref": null,
+          "props": {
+            "children": ["let us learn ", "react", " "]
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "div",
+          "key": "vue",
+          "ref": null,
+          "props": {
+            "children": ["let us learn ", "vue", " "]
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "div",
+          "key": "webpack",
+          "ref": null,
+          "props": {
+            "children": ["let us learn ", "webpack", " "]
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "div",
+          "key": "nodejs",
+          "ref": null,
+          "props": {
+            "children": ["let us learn ", "nodejs", " "]
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ],
+      {
+        "key": null,
+        "ref": null,
+        "props": {},
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "div",
+        "key": null,
+        "ref": null,
+        "props": {
+          "children": "三元运算"
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "div",
+        "key": null,
+        "ref": null,
+        "props": {
+          "children": " i am foot"
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "button",
+        "key": null,
+        "ref": null,
+        "props": {
+          "children": "打印render后的内容"
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ]
+  },
+  "_owner": null,
+  "_store": {}
+}
