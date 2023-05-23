@@ -187,5 +187,15 @@ fiber 对应关系
 
 仓库  `react_Advanced/01jsx/Reactcode` 下有对应的简化版本代码
 
-# 六、JSX实现（[react课程](https://appjiz2zqrn2142.pc.xiaoe-tech.com/)）
+# 六、JSX实现
+
+## 1.编译时：Babel 解析 JSX 流程
+
+`react_Advanced/01jsx/demo/Realize/babelRealize/jsx.js`
+
+## 2.运行时：`jsx`、`React.createElement`
+
+[react课程](https://appjiz2zqrn2142.pc.xiaoe-tech.com/)
+
+
 
