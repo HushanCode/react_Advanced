@@ -1,6 +1,6 @@
 # JSX
 
-![image-20230522222819340](https://cdn.jsdelivr.net/gh/xzhuling/DrawingBed/img/image-20230522222819340.png)
+![image-20230523215512410](https://cdn.jsdelivr.net/gh/HushanCode/DrawingBed/img/image-20230523215512410.png)
 
 # 一、可能遇到的问题
 
@@ -27,7 +27,15 @@
 
 # 二、JSX
 
-## 1.`React.createElement`
+## 1.JSX是什么?
+
+JSX 是 JavaScript 语言的一种语法扩展，它是由 Facebook 在开发 React 框架时所创建的。JSX 可以让开发者使用类 HTML 的语法来描述用户界面，它允许在 JavaScript 代码中嵌入 HTML 片段和组件，从而提高了开发者在编写复杂用户界面时的效率和可读性。
+
+尽管 JSX 代码看起来很像 HTML，但它实际上是一种 JavaScript 代码，在编译时会被转换成 JavaScript 对象。这些对象称为虚拟 DOM（Virtual DOM），它们会在 React 中用于渲染用户界面。因此，可以说 JSX 是一种语法扩展，因为它允许在 JavaScript 代码中使用类 HTML 的语法，但在最终运行时，它仍然是 JavaScript 代码的一部分。
+
+需要注意的是，JSX 并不是 JavaScript 标准的一部分，它是由 React 框架自己定义的语法。因此，在使用 JSX 时，需要使用 Babel 或者其他编译工具将其转换为标准的 JavaScript 代码，才能在浏览器中运行。
+
+## 2.`React.createElement`
 
 ### (1) 定义语法
 
@@ -62,11 +70,11 @@ React.createElement("div", null,
 
 该参数其实本质上是一个参数中介，将参数整理为`ReactElement`的参数结构，然后调用`ReactElement`
 
-![image-20230522222935018](https://cdn.jsdelivr.net/gh/xzhuling/DrawingBed/img/image-20230522222935018.png)
+![image-20230523215704806](https://cdn.jsdelivr.net/gh/HushanCode/DrawingBed/img/image-20230523215704806.png)
 
-![image-20230522223011969](https://cdn.jsdelivr.net/gh/xzhuling/DrawingBed/img/image-20230522223011969.png)
+![image-20230523215428904](https://cdn.jsdelivr.net/gh/HushanCode/DrawingBed/img/image-20230523215428904.png)
 
-## 2.`ReactElement`
+## 3.`ReactElement`
 
 ### (1) 语法定义
 
@@ -100,7 +108,7 @@ React.createElement("div", null,
 
 
 
-## 3.`React.render`
+## 4.`React.render`
 
 ### (1) 语法定义
 
@@ -123,43 +131,61 @@ ReactDOM.render(
 
 
 
+# 三、JSX规则
 
+以便后续能更流畅地使用 jsx 语法。
 
-# 三、问题详解
+| `jsx`元素类型     | `react.createElement` 转换后                      | `type` 属性                   |
+| ----------------- | ------------------------------------------------- | ----------------------------- |
+| `element`元素类型 | `react element`类型                               | 标签字符串，例如 `div`        |
+| `fragment`类型    | `react element`类型                               | `symbol` `react.fragment`类型 |
+| 文本类型          | 直接字符串                                        | 无                            |
+| 数组类型          | 返回数组结构，里面元素被`react.createElement`转换 | 无                            |
+| 组件类型          | `react element`类型                               | 组件类或者组件函数本身        |
+| 三元运算 / 表达式 | 先执行三元运算，然后按照上述规则处理              | 看三元运算返回结果            |
+| 函数执行          | 先执行函数，然后按照上述规则处理                  | 看函数执行返回结果            |
 
-## 1.JSX是如何转化为DOM的？
+# 四、JSX-> fiber
 
-![image-20230522231841688](https://cdn.jsdelivr.net/gh/xzhuling/DrawingBed/img/image-20230522231841688.png)
+最终，在调和阶段，上述 React element 对象的每一个子节点都会形成一个与之对应的 fiber 对象，然后通过 sibling、return、child 将每一个 fiber 对象联系起来。
 
-## 2.什么是JSX，他和js之间的关系是什么？概念
+## 1.不同种类的 fiber Tag
 
-JSX 是 JavaScript 语言的一种语法扩展，它是由 Facebook 在开发 React 框架时所创建的。JSX 可以让开发者使用类 HTML 的语法来描述用户界面，它允许在 JavaScript 代码中嵌入 HTML 片段和组件，从而提高了开发者在编写复杂用户界面时的效率和可读性。
+React 针对不同 React element 对象会产生不同 tag (种类) 的fiber 对象。首先，来看一下 tag 与 element 的对应关系：
 
-尽管 JSX 代码看起来很像 HTML，但它实际上是一种 JavaScript 代码，在编译时会被转换成 JavaScript 对象。这些对象称为虚拟 DOM（Virtual DOM），它们会在 React 中用于渲染用户界面。因此，可以说 JSX 是一种语法扩展，因为它允许在 JavaScript 代码中使用类 HTML 的语法，但在最终运行时，它仍然是 JavaScript 代码的一部分。
+```js
+export const FunctionComponent = 0;       // 函数组件
+export const ClassComponent = 1;          // 类组件
+export const IndeterminateComponent = 2;  // 初始化的时候不知道是函数组件还是类组件 
+export const HostRoot = 3;                // Root Fiber 可以理解为根元素 ， 通过reactDom.render()产生的根元素
+export const HostPortal = 4;              // 对应  ReactDOM.createPortal 产生的 Portal 
+export const HostComponent = 5;           // dom 元素 比如 <div>
+export const HostText = 6;                // 文本节点
+export const Fragment = 7;                // 对应 <React.Fragment> 
+export const Mode = 8;                    // 对应 <React.StrictMode>   
+export const ContextConsumer = 9;         // 对应 <Context.Consumer>
+export const ContextProvider = 10;        // 对应 <Context.Provider>
+export const ForwardRef = 11;             // 对应 React.ForwardRef
+export const Profiler = 12;               // 对应 <Profiler/ >
+export const SuspenseComponent = 13;      // 对应 <Suspense>
+export const MemoComponent = 14;          // 对应 React.memo 返回的组件
+```
 
-需要注意的是，JSX 并不是 JavaScript 标准的一部分，它是由 React 框架自己定义的语法。因此，在使用 JSX 时，需要使用 Babel 或者其他编译工具将其转换为标准的 JavaScript 代码，才能在浏览器中运行。
+## 2.jsx 最终形成的 fiber 结构图
 
+最终写的 jsx 会变成如下格式：
 
+![jsx7.jpg](https://cdn.jsdelivr.net/gh/HushanCode/DrawingBed/img/873f00b1255d4f5f8dac4954cf37dc9f~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0-20230523215356723.awebp)
 
-## 3.JSX的本质是什么？createElement
+fiber 对应关系
 
+- child： 一个由父级 fiber 指向子级 fiber 的指针。
+- return：一个子级 fiber 指向父级 fiber 的指针。
+- sibling: 一个 fiber 指向下一个兄弟 fiber 的指针。
 
+# 五、JSX源码
 
+仓库  `react_Advanced/01jsx/Reactcode` 下有对应的简化版本代码
 
-
-
-
-
-
-
-
-
-
-# 四、JSX源码
-
-
-
-
-
-# 五、JSX实现
+# 六、JSX实现（[react课程](https://appjiz2zqrn2142.pc.xiaoe-tech.com/)）
 
